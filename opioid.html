@@ -265,6 +265,15 @@
             font-family: 'Vazirmatn', sans-serif;
         }
 
+        .ratio-tag {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: #fef08a;
+            font-weight: 600;
+            direction: rtl;
+        }
+
         .clinical-warning {
             margin-top: 18px;
             padding: 12px 14px;
@@ -304,25 +313,27 @@
         <div class="select-wrapper">
             <select id="drugFrom" class="input-control" onchange="runCalc()">
                 <option value="" disabled selected>انتخاب داروی مبدأ...</option>
-                <option value="25">Morphine (Oral)</option>
-                <option value="10">Morphine (Parenteral)</option>
-                <option value="0.4">Buprenorphine (SL)</option>
-                <option value="0.3">Buprenorphine (Parenteral)</option>
-                <option value="200">Codeine (Oral)</option>
-                <option value="100">Codeine (Parenteral)</option>
-                <option value="0.15">FentaNYL (Parenteral)</option>
-                <option value="25">HYDROcodone (Oral)</option>
-                <option value="2">HYDROmorphone (Parenteral)</option>
-                <option value="5">HYDROmorphone (Oral)</option>
-                <option value="300">Meperidine (Oral)</option>
-                <option value="100">Meperidine (Parenteral)</option>
-                <option value="20">OxyCODONE (Oral)</option>
-                <option value="10">OxyCODONE (Parenteral)</option>
-                <option value="1">OxyMORphone (Parenteral)</option>
-                <option value="10">OxyMORphone (Oral)</option>
-                <option value="100">Tapentadol (Oral)</option>
-                <option value="120">TraMADol (Oral)</option>
-                <option value="100">TraMADol (Parenteral)</option>
+                <option value="morphine_oral">Morphine (Oral)</option>
+                <option value="morphine_iv">Morphine (Parenteral)</option>
+                <option value="methadone_oral">Methadone (Oral)</option>
+                <option value="methadone_iv">Methadone (Parenteral)</option>
+                <option value="buprenorphine_sl">Buprenorphine (SL)</option>
+                <option value="buprenorphine_iv">Buprenorphine (Parenteral)</option>
+                <option value="codeine_oral">Codeine (Oral)</option>
+                <option value="codeine_iv">Codeine (Parenteral)</option>
+                <option value="fentanyl_iv">FentaNYL (Parenteral)</option>
+                <option value="hydrocodone_oral">HYDROcodone (Oral)</option>
+                <option value="hydromorphone_iv">HYDROmorphone (Parenteral)</option>
+                <option value="hydromorphone_oral">HYDROmorphone (Oral)</option>
+                <option value="meperidine_oral">Meperidine (Oral)</option>
+                <option value="meperidine_iv">Meperidine (Parenteral)</option>
+                <option value="oxycodone_oral">OxyCODONE (Oral)</option>
+                <option value="oxycodone_iv">OxyCODONE (Parenteral)</option>
+                <option value="oxymorphone_iv">OxyMORphone (Parenteral)</option>
+                <option value="oxymorphone_oral">OxyMORphone (Oral)</option>
+                <option value="tapentadol_oral">Tapentadol (Oral)</option>
+                <option value="tramadol_oral">TraMADol (Oral)</option>
+                <option value="tramadol_iv">TraMADol (Parenteral)</option>
             </select>
         </div>
     </div>
@@ -337,25 +348,27 @@
         <div class="select-wrapper">
             <select id="drugTo" class="input-control" onchange="runCalc()">
                 <option value="" disabled selected>انتخاب داروی مقصد...</option>
-                <option value="25">Morphine (Oral)</option>
-                <option value="10">Morphine (Parenteral)</option>
-                <option value="0.4">Buprenorphine (SL)</option>
-                <option value="0.3">Buprenorphine (Parenteral)</option>
-                <option value="200">Codeine (Oral)</option>
-                <option value="100">Codeine (Parenteral)</option>
-                <option value="0.15">FentaNYL (Parenteral)</option>
-                <option value="25">HYDROcodone (Oral)</option>
-                <option value="2">HYDROmorphone (Parenteral)</option>
-                <option value="5">HYDROmorphone (Oral)</option>
-                <option value="300">Meperidine (Oral)</option>
-                <option value="100">Meperidine (Parenteral)</option>
-                <option value="20">OxyCODONE (Oral)</option>
-                <option value="10">OxyCODONE (Parenteral)</option>
-                <option value="1">OxyMORphone (Parenteral)</option>
-                <option value="10">OxyMORphone (Oral)</option>
-                <option value="100">Tapentadol (Oral)</option>
-                <option value="120">TraMADol (Oral)</option>
-                <option value="100">TraMADol (Parenteral)</option>
+                <option value="morphine_oral">Morphine (Oral)</option>
+                <option value="morphine_iv">Morphine (Parenteral)</option>
+                <option value="methadone_oral">Methadone (Oral)</option>
+                <option value="methadone_iv">Methadone (Parenteral)</option>
+                <option value="buprenorphine_sl">Buprenorphine (SL)</option>
+                <option value="buprenorphine_iv">Buprenorphine (Parenteral)</option>
+                <option value="codeine_oral">Codeine (Oral)</option>
+                <option value="codeine_iv">Codeine (Parenteral)</option>
+                <option value="fentanyl_iv">FentaNYL (Parenteral)</option>
+                <option value="hydrocodone_oral">HYDROcodone (Oral)</option>
+                <option value="hydromorphone_iv">HYDROmorphone (Parenteral)</option>
+                <option value="hydromorphone_oral">HYDROmorphone (Oral)</option>
+                <option value="meperidine_oral">Meperidine (Oral)</option>
+                <option value="meperidine_iv">Meperidine (Parenteral)</option>
+                <option value="oxycodone_oral">OxyCODONE (Oral)</option>
+                <option value="oxycodone_iv">OxyCODONE (Parenteral)</option>
+                <option value="oxymorphone_iv">OxyMORphone (Parenteral)</option>
+                <option value="oxymorphone_oral">OxyMORphone (Oral)</option>
+                <option value="tapentadol_oral">Tapentadol (Oral)</option>
+                <option value="tramadol_oral">TraMADol (Oral)</option>
+                <option value="tramadol_iv">TraMADol (Parenteral)</option>
             </select>
         </div>
     </div>
@@ -364,11 +377,12 @@
         <div class="result-header">دوز معادل محاسبه‌شده (روزانه):</div>
         <div class="result-metric" id="resVal">0 mg</div>
         <div class="sub-unit-badge" id="extraMcg" style="display: none;"></div>
+        <div class="ratio-tag" id="methadoneRatioNote" style="display: none;"></div>
     </div>
 
-    <div class="clinical-warning">
+    <div class="clinical-warning" id="warningBox">
         <strong>⚠️ احتیاط و نکات بالینی:</strong>
-        به علت احتمال بروز <i>تحمل متقاطع ناکامل (Incomplete Cross-Tolerance)</i>، پیشنهاد می‌شود در آغاز چرخش دارویی، دوز تجویزی را <b>۲۵٪ الی ۵۰٪ کمتر</b> از مقدار محاسبه‌شده قرار داده و پاسخ بالینی بیمار را تحت پایش دقیق قرار دهید.
+        <span id="warningText">به علت احتمال بروز <i>تحمل متقاطع ناکامل (Incomplete Cross-Tolerance)</i>، پیشنهاد می‌شود در آغاز چرخش دارویی، دوز تجویزی را <b>۲۵٪ الی ۵۰٪ کمتر</b> از مقدار محاسبه‌شده قرار داده و پاسخ بالینی بیمار را تحت پایش دقیق قرار دهید.</span>
     </div>
 </div>
 
@@ -411,33 +425,121 @@
         setTheme(isDark ? 'light' : 'dark');
     });
 
+    // ضرایب دوز هم‌ارز نسبت به ۳۰ میلی‌گرم مورفین خوراکی (OME = 30)
+    const OME_REF = {
+        morphine_oral: 30,
+        morphine_iv: 10,
+        buprenorphine_sl: 0.4,
+        buprenorphine_iv: 0.3,
+        codeine_oral: 200,
+        codeine_iv: 100,
+        fentanyl_iv: 0.15,
+        hydrocodone_oral: 30,
+        hydromorphone_iv: 1.5,
+        hydromorphone_oral: 7.5,
+        meperidine_oral: 300,
+        meperidine_iv: 75,
+        oxycodone_oral: 20,
+        oxycodone_iv: 10,
+        oxymorphone_iv: 1,
+        oxymorphone_oral: 10,
+        tapentadol_oral: 100,
+        tramadol_oral: 120,
+        tramadol_iv: 100
+    };
+
+    // نسبت غیرخطی تبدیل مورفین خوراکی به متادون بر اساس دوز ۲۴ ساعته مورفین
+    function getMorphineToMethadoneRatio(omme) {
+        if (omme < 30) return 2;
+        if (omme < 100) return 4;
+        if (omme < 300) return 8;
+        if (omme < 500) return 12;
+        if (omme < 1000) return 15;
+        return 20;
+    }
+
     function runCalc() {
-        const eqFrom = parseFloat(document.getElementById('drugFrom').value);
-        const eqTo = parseFloat(document.getElementById('drugTo').value);
+        const fromDrug = document.getElementById('drugFrom').value;
+        const toDrug = document.getElementById('drugTo').value;
         const dose = parseFloat(document.getElementById('inputDose').value);
 
         const resBox = document.getElementById('resBox');
         const resVal = document.getElementById('resVal');
         const extraMcg = document.getElementById('extraMcg');
+        const ratioNote = document.getElementById('methadoneRatioNote');
+        const warningText = document.getElementById('warningText');
 
-        if (eqFrom && eqTo && dose > 0) {
-            const finalDose = (dose / eqFrom) * eqTo;
-            const roundedFinal = Number(finalDose.toFixed(3));
-
-            resVal.innerText = roundedFinal + " mg";
-
-            if (roundedFinal < 1) {
-                const mcg = Math.round(roundedFinal * 1000);
-                extraMcg.innerText = "معادل " + mcg.toLocaleString('fa-IR') + " میکروگرم (µg)";
-                extraMcg.style.display = 'inline-block';
-            } else {
-                extraMcg.style.display = 'none';
-            }
-
-            resBox.style.display = 'block';
-        } else {
+        if (!fromDrug || !toDrug || isNaN(dose) || dose <= 0) {
             resBox.style.display = 'none';
+            ratioNote.style.display = 'none';
+            return;
         }
+
+        let finalDose = 0;
+        let isMethadoneInvolved = false;
+        ratioNote.style.display = 'none';
+
+        // حالت ۱: هر دو دارو یکی هستند
+        if (fromDrug === toDrug) {
+            finalDose = dose;
+        }
+        // حالت ۲: تبدیل مورفین به متادون (پله‌های غیرخطی بر اساس دوز روزانه)
+        else if (fromDrug.startsWith('morphine_') && toDrug.startsWith('methadone_')) {
+            isMethadoneInvolved = true;
+            const omme = (fromDrug === 'morphine_iv') ? dose * 3 : dose; // تبدیل به دوز روزانه مورفین خوراکی
+            const ratio = getMorphineToMethadoneRatio(omme);
+            
+            let oralMethadone = omme / ratio;
+            finalDose = (toDrug === 'methadone_iv') ? (oralMethadone / 2) : oralMethadone;
+
+            ratioNote.innerHTML = `نسبت تبدیل بالینی مورفین به متادون: <b>${ratio} به ۱</b> (بر مبنای OMME = ${Math.round(omme)} mg/day)`;
+            ratioNote.style.display = 'block';
+        }
+        // حالت ۳: تبدیل متادون به مورفین
+        else if (fromDrug.startsWith('methadone_') && toDrug.startsWith('morphine_')) {
+            isMethadoneInvolved = true;
+            const oralMethadone = (fromDrug === 'methadone_iv') ? dose * 2 : dose;
+            
+            // برآورد متناظر معکوس بر مبنای جدول غیرخطی
+            let ratio = 4;
+            if (oralMethadone < 10) ratio = 2;
+            else if (oralMethadone < 30) ratio = 4;
+            else if (oralMethadone < 50) ratio = 8;
+            else ratio = 12;
+
+            const omme = oralMethadone * ratio;
+            finalDose = (toDrug === 'morphine_iv') ? (omme / 3) : omme;
+
+            ratioNote.innerHTML = `نسبت معادل تخمینی متادون به مورفین: <b>۱ به ${ratio}</b>`;
+            ratioNote.style.display = 'block';
+        }
+        // حالت ۴: سایر داروها با نسبت خطی استاندارد OME
+        else {
+            const eqFrom = OME_REF[fromDrug] || 30;
+            const eqTo = OME_REF[toDrug] || 30;
+            finalDose = (dose / eqFrom) * eqTo;
+        }
+
+        const roundedFinal = Number(finalDose.toFixed(2));
+        resVal.innerText = roundedFinal + " mg";
+
+        // نمایش واحد میکروگرم برای مقادیر اعشاری زیر ۱ میلی‌گرم (مانند فنتانیل و بوپرنورفین)
+        if (roundedFinal < 1) {
+            const mcg = Math.round(finalDose * 1000);
+            extraMcg.innerText = "معادل " + mcg.toLocaleString('fa-IR') + " میکروگرم (µg)";
+            extraMcg.style.display = 'inline-block';
+        } else {
+            extraMcg.style.display = 'none';
+        }
+
+        // بروزرسانی متن اخطار بالینی در صورت انتخاب متادون
+        if (isMethadoneInvolved) {
+            warningText.innerHTML = "<b>هشدار ویژه متادون:</b> فارماکوکینتیک متادون شدیداً متغیر است و نیمه‌عمر آن طولانی‌تر از مدت اثر ضددرد آن می‌باشد. هنگام شروع متادون به دلیل خطر تجمع دارو و سرکوب تنفسی، توصیه می‌شود دوز تجویزی <b>۷۵٪ الی ۹۰٪ کاهش یابد</b> و بیمار پایش قلبی (فاصله QTc) شود.";
+        } else {
+            warningText.innerHTML = "به علت احتمال بروز <i>تحمل متقاطع ناکامل (Incomplete Cross-Tolerance)</i>، پیشنهاد می‌شود در آغاز چرخش دارویی، دوز تجویزی را <b>۲۵٪ الی ۵۰٪ کمتر</b> از مقدار محاسبه‌شده قرار داده و پاسخ بالینی بیمار را تحت پایش دقیق قرار دهید.";
+        }
+
+        resBox.style.display = 'block';
     }
 </script>
 </body>
