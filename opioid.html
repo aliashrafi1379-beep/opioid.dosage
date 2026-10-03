@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>محاسبه‌گر دوز هم‌ارز مخدرها</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-canvas: #f8fafc;
+            --surface-card: #ffffff;
+            --surface-field: #f1f5f9;
+            --surface-field-focus: #ffffff;
+            --border-card: rgba(226, 232, 240, 0.9);
+            --border-field: #cbd5e1;
+            --text-heading: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --primary: #0284c7;
+            --primary-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            --result-gradient: linear-gradient(135deg, #0369a1 0%, #0f172a 100%);
+            --result-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.15);
+            --badge-text: #e0f2fe;
+            --warn-bg: #fffbeb;
+            --warn-border: #f59e0b;
+            --warn-text: #92400e;
+            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-result: 0 10px 25px -3px rgba(3, 105, 161, 0.25);
+            --theme-btn-bg: #e2e8f0;
+            --theme-btn-hover: #cbd5e1;
+            --theme-btn-text: #1e293b;
+        }
+
+        [data-theme="dark"] {
+            --bg-canvas: #090d16;
+            --surface-card: #131a29;
+            --surface-field: #1b2438;
+            --surface-field-focus: #212c45;
+            --border-card: #1e293b;
+            --border-field: #2d3b55;
+            --text-heading: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --primary: #38bdf8;
+            --primary-gradient: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            --result-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --result-text: #f8fafc;
+            --badge-bg: rgba(56, 189, 248, 0.15);
+            --badge-text: #7dd3fc;
+            --warn-bg: rgba(245, 158, 11, 0.08);
+            --warn-border: #d97706;
+            --warn-text: #fcd34d;
+            --shadow-card: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+            --shadow-result: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+            --theme-btn-bg: #1e293b;
+            --theme-btn-hover: #29354d;
+            --theme-btn-text: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-body);
+            margin: 0;
+            padding: 16px 12px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 460px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-card);
+            border-radius: 20px;
+            padding: 22px 20px 20px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            transition: all 0.25s ease;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+        }
+
+        .brand-title {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -0.02em;
+        }
+
+        .theme-toggle-btn {
+            background: var(--theme-btn-bg);
+            color: var(--theme-btn-text);
+            border: none;
+            outline: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--theme-btn-hover);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+
+        .input-control {
+            width: 100%;
+            height: 46px;
+            padding: 0 14px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border-field);
+            background: var(--surface-field);
+            color: var(--text-heading);
+            font-family: 'Vazirmatn', 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .input-control:focus {
+            border-color: var(--primary);
+            background: var(--surface-field-focus);
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "";
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid var(--text-muted);
+            pointer-events: none;
+        }
+
+        select.input-control {
+            cursor: pointer;
+            padding-left: 34px;
+        }
+
+        input[type="number"].input-control {
+            direction: ltr;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .result-panel {
+            display: none;
+            margin-top: 20px;
+            background: var(--result-gradient);
+            border-radius: 16px;
+            padding: 18px;
+            color: var(--result-text);
+            text-align: center;
+            box-shadow: var(--shadow-result);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            font-size: 0.85rem;
+            font-weight: 500;
+            opacity: 0.85;
+            margin-bottom: 6px;
+        }
+
+        .result-metric {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            direction: ltr;
+            margin: 4px 0 6px;
+        }
+
+        .sub-unit-badge {
+            display: inline-block;
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-top: 4px;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .clinical-warning {
+            margin-top: 18px;
+            padding: 12px 14px;
+            background: var(--warn-bg);
+            border-right: 3.5px solid var(--warn-border);
+            border-radius: 10px;
+            color: var(--warn-text);
+            font-size: 0.77rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .clinical-warning strong {
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="top-bar">
+        <div class="brand-wrapper">
+            <div class="brand-icon">💊</div>
+            <h1 class="brand-title">تبدیل دوز هم‌ارز مخدرها</h1>
+        </div>
+        <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="تغییر تم">
+            <svg id="themeIcon" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="form-group">
+        <label for="drugFrom">داروی فعلی بیمار (مبدأ):</label>
+        <div class="select-wrapper">
+            <select id="drugFrom" class="input-control" onchange="runCalc()">
+                <option value="" disabled selected>انتخاب داروی مبدأ...</option>
+                <option value="25">Morphine (Oral)</option>
+                <option value="10">Morphine (Parenteral)</option>
+                <option value="0.4">Buprenorphine (SL)</option>
+                <option value="0.3">Buprenorphine (Parenteral)</option>
+                <option value="200">Codeine (Oral)</option>
+                <option value="100">Codeine (Parenteral)</option>
+                <option value="0.15">FentaNYL (Parenteral)</option>
+                <option value="25">HYDROcodone (Oral)</option>
+                <option value="2">HYDROmorphone (Parenteral)</option>
+                <option value="5">HYDROmorphone (Oral)</option>
+                <option value="300">Meperidine (Oral)</option>
+                <option value="100">Meperidine (Parenteral)</option>
+                <option value="20">OxyCODONE (Oral)</option>
+                <option value="10">OxyCODONE (Parenteral)</option>
+                <option value="1">OxyMORphone (Parenteral)</option>
+                <option value="10">OxyMORphone (Oral)</option>
+                <option value="100">Tapentadol (Oral)</option>
+                <option value="120">TraMADol (Oral)</option>
+                <option value="100">TraMADol (Parenteral)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputDose">مجموع دوز ۲۴ ساعت داروی مبدأ (mg):</label>
+        <input type="number" id="inputDose" class="input-control" placeholder="0.0" oninput="runCalc()" step="any" min="0">
+    </div>
+
+    <div class="form-group">
+        <label for="drugTo">داروی مورد نظر جهت جایگزینی (مقصد):</label>
+        <div class="select-wrapper">
+            <select id="drugTo" class="input-control" onchange="runCalc()">
+                <option value="" disabled selected>انتخاب داروی مقصد...</option>
+                <option value="25">Morphine (Oral)</option>
+                <option value="10">Morphine (Parenteral)</option>
+                <option value="0.4">Buprenorphine (SL)</option>
+                <option value="0.3">Buprenorphine (Parenteral)</option>
+                <option value="200">Codeine (Oral)</option>
+                <option value="100">Codeine (Parenteral)</option>
+                <option value="0.15">FentaNYL (Parenteral)</option>
+                <option value="25">HYDROcodone (Oral)</option>
+                <option value="2">HYDROmorphone (Parenteral)</option>
+                <option value="5">HYDROmorphone (Oral)</option>
+                <option value="300">Meperidine (Oral)</option>
+                <option value="100">Meperidine (Parenteral)</option>
+                <option value="20">OxyCODONE (Oral)</option>
+                <option value="10">OxyCODONE (Parenteral)</option>
+                <option value="1">OxyMORphone (Parenteral)</option>
+                <option value="10">OxyMORphone (Oral)</option>
+                <option value="100">Tapentadol (Oral)</option>
+                <option value="120">TraMADol (Oral)</option>
+                <option value="100">TraMADol (Parenteral)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="result-panel" id="resBox">
+        <div class="result-header">دوز معادل محاسبه‌شده (روزانه):</div>
+        <div class="result-metric" id="resVal">0 mg</div>
+        <div class="sub-unit-badge" id="extraMcg" style="display: none;"></div>
+    </div>
+
+    <div class="clinical-warning">
+        <strong>⚠️ احتیاط و نکات بالینی:</strong>
+        به علت احتمال بروز <i>تحمل متقاطع ناکامل (Incomplete Cross-Tolerance)</i>، پیشنهاد می‌شود در آغاز چرخش دارویی، دوز تجویزی را <b>۲۵٪ الی ۵۰٪ کمتر</b> از مقدار محاسبه‌شده قرار داده و پاسخ بالینی بیمار را تحت پایش دقیق قرار دهید.
+    </div>
+</div>
+
+<script>
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+    }
+
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlEl = document.documentElement;
+
+    const sunIcon = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+    const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            htmlEl.setAttribute('data-theme', 'dark');
+            themeIcon.innerHTML = sunIcon;
+            localStorage.setItem('app_theme', 'dark');
+        } else {
+            htmlEl.removeAttribute('data-theme');
+            themeIcon.innerHTML = moonIcon;
+            localStorage.setItem('app_theme', 'light');
+        }
+    }
+
+    const savedTheme = localStorage.getItem('app_theme');
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.colorScheme === 'dark') {
+        setTheme('dark');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+        setTheme(isDark ? 'light' : 'dark');
+    });
+
+    function runCalc() {
+        const eqFrom = parseFloat(document.getElementById('drugFrom').value);
+        const eqTo = parseFloat(document.getElementById('drugTo').value);
+        const dose = parseFloat(document.getElementById('inputDose').value);
+
+        const resBox = document.getElementById('resBox');
+        const resVal = document.getElementById('resVal');
+        const extraMcg = document.getElementById('extraMcg');
+
+        if (eqFrom && eqTo && dose > 0) {
+            const finalDose = (dose / eqFrom) * eqTo;
+            const roundedFinal = Number(finalDose.toFixed(3));
+
+            resVal.innerText = roundedFinal + " mg";
+
+            if (roundedFinal < 1) {
+                const mcg = Math.round(roundedFinal * 1000);
+                extraMcg.innerText = "معادل " + mcg.toLocaleString('fa-IR') + " میکروگرم (µg)";
+                extraMcg.style.display = 'inline-block';
+            } else {
+                extraMcg.style.display = 'none';
+            }
+
+            resBox.style.display = 'block';
+        } else {
+            resBox.style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>
